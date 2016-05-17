@@ -1,0 +1,31 @@
+﻿@model List<Modelo.PEDIDO>
+@{
+    ViewBag.Title = "Listar Pedido";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Estado</th>
+                <th>Id Usuario</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@(m.IDPEDIDO)</td>
+                    <td>@(m.FECHA)</td>
+                    <td>@(m.ESTADO)</td>
+                    <td>@(m.IDUSUARIO)</td>
+                    <td><a href="~/Home/TDPedido/@m.IDPEDIDO" class="btn btn-warning">Detalle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

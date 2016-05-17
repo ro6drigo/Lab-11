@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab11_MVC_Chirinos", "Lab11_MVC_Chirinos\Lab11_MVC_Chirinos.csproj", "{EF9089EA-A4D0-477D-B209-F88800A806B5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modelo", "Modelo\Modelo.csproj", "{1694CB12-5704-47EB-ADD9-C4DF6A80A2CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EF9089EA-A4D0-477D-B209-F88800A806B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF9089EA-A4D0-477D-B209-F88800A806B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF9089EA-A4D0-477D-B209-F88800A806B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF9089EA-A4D0-477D-B209-F88800A806B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1694CB12-5704-47EB-ADD9-C4DF6A80A2CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1694CB12-5704-47EB-ADD9-C4DF6A80A2CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1694CB12-5704-47EB-ADD9-C4DF6A80A2CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1694CB12-5704-47EB-ADD9-C4DF6A80A2CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

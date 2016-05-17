@@ -1,0 +1,29 @@
+﻿@model List<Modelo.TIPO_USUARIO>
+@{
+    ViewBag.Title = "Listar Tipos de Usuario";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@(m.IDTIPOUSUARIO)</td>
+                    <td>@(m.NOMBRE)</td>
+                    <td>@(m.ESTADO == "A" ? "Activo" : "Inactivo")</td>
+                    <td><a href="~/Home/TDTipoUsuario/@m.IDTIPOUSUARIO" class="btn btn-warning">Detalle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

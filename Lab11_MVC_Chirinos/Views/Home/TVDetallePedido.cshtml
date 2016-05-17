@@ -1,0 +1,29 @@
+﻿@model List<Modelo.DETALLE_PEDIDO>
+@{
+    ViewBag.Title = "Listar Detalle Pedido";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id Pedido</th>
+                <th>Id Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@(m.IDPEDIDO)</td>
+                    <td>@(m.IDPRODUCTO)</td>
+                    <td>@(m.PRECIO)</td>
+                    <td>@(m.CANTIDAD)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

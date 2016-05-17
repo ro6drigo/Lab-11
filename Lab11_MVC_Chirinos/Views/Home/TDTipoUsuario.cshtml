@@ -1,0 +1,55 @@
+﻿@model Modelo.TIPO_USUARIO
+@{
+    ViewBag.Title = "Detalle Tipo de Usuario";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Información del Tipo de Usuario
+    </div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>Id</dt>
+            <dd>@(Model.IDTIPOUSUARIO)</dd>
+            <dt>Nombre</dt>
+            <dd>@(Model.NOMBRE)</dd>
+            <dt>Estado</dt>
+            <dd>@(Model.ESTADO == "A" ? "Activo" : "Inactivo")</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Usuarios
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Tipo Usuario</th>
+                    <th>Password</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>E-mail</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            @foreach (var m in Model.USUARIO)
+            {
+                <tr>
+                    <td>@(m.IDUSUARIO)</td>
+                    <td>@(m.IDTIPOUSUARIO)</td>
+                    <td>@(m.PASSWORD)</td>
+                    <td>@(m.NOMBRE)</td>
+                    <td>@(m.APELLIDOS)</td>
+                    <td>@(m.EMAIL)</td>
+                    <td>@(m.ESTADO == "A" ? "Activo" : "Inactivo")</td>
+                </tr>
+            }
+            <tbody></tbody>
+        </table>
+    </div>
+</div>

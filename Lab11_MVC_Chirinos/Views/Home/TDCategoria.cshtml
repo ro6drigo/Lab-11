@@ -1,0 +1,51 @@
+﻿@model Modelo.CATEGORIA
+@{
+    ViewBag.Title = "Detalle Categoria";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Información de la Categoría
+    </div>
+    <div>
+        <dl class="dl-horizontal">
+            <dt>Id</dt>
+            <dd>@(Model.IDCATEGORIA)</dd>
+            <dt>Categoria</dt>
+            <dd>@(Model.NOMBRE)</dd>
+            <dt>Descripción</dt>
+            <dd>@(Model.DESCRIPCION)</dd>
+            <dt>Estado</dt>
+            <dd>@(Model.ESTADO == "A" ? "Activo" : "Inactivo")</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Productos
+    </div>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            @foreach (var m in Model.PRODUCTO)
+            {
+                <tr>
+                    <td>@(m.IDPRODUCTO)</td>
+                    <td>@(m.NOMBRE)</td>
+                    <td>@(m.DESCRIPCION)</td>
+                    <td>@(m.PRECIO)</td>
+                </tr>
+            }
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
