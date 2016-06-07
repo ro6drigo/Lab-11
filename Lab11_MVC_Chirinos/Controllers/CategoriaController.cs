@@ -30,7 +30,7 @@ namespace Lab11_MVC_Chirinos.Controllers
             return View(categoria.obtener(id));
         }
 
-        public ActionResult agregarEditar(int id = 0)
+        public ActionResult Mantenimiento(int id = 0)
         {
             return View(
                 id == 0 ? new CATEGORIA() // Generar nueva categoria
