@@ -23,7 +23,7 @@ namespace Lab11_MVC_Chirinos.Controllers
             return View(usuario.obtener(id));
         }
 
-        public ActionResult agregarEditar(string id = "")
+        public ActionResult Mantenimiento(string id = "")
         {
             return View(
                 id == "" || id == null ? new USUARIO() // Generar nuevo usuario
@@ -44,7 +44,7 @@ namespace Lab11_MVC_Chirinos.Controllers
             }
         }
 
-        public ActionResult eliminar(string id)
+        public ActionResult Eliminar(string id)
         {
             usuario.IDUSUARIO = id;
             usuario.eliminar();

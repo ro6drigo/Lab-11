@@ -44,8 +44,8 @@
                     <td>@(m.ESTADO == "A" ? "Activo" : "Inactivo")</td>
                     <td>
                         <a href="~/Categoria/Detalle/@m.IDCATEGORIA" class="btn btn-warning btn-xs">Detalle</a>
-                        <a href="~/Categoria/agregarEditar/@m.IDCATEGORIA" class="btn btn-primary btn-xs">Editar</a>
-                        <a href="~/Categoria/eliminar/@m.IDCATEGORIA" class="btn btn-danger btn-xs" onclick="return confirm('¿Esta seguro de eliminar el registro?')">Eliminar</a>
+                        <a href="~/Categoria/Mantenimiento/@m.IDCATEGORIA" class="btn btn-primary btn-xs">Editar</a>
+                        <a href="~/Categoria/Eliminar/@m.IDCATEGORIA" class="btn btn-danger btn-xs" onclick="return confirm('¿Esta seguro de eliminar el registro?')">Eliminar</a>
                     </td>
                 </tr>
             }
