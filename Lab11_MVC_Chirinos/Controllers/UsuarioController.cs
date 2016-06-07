@@ -31,7 +31,7 @@ namespace Lab11_MVC_Chirinos.Controllers
                 );
         }
 
-        public ActionResult guardar(USUARIO model)
+        public ActionResult Guardar(USUARIO model)
         {
             if (ModelState.IsValid)
             {

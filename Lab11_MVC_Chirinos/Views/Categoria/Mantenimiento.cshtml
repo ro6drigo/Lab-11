@@ -8,7 +8,7 @@
     <li class="active">@(Model.IDCATEGORIA > 0 ? Model.NOMBRE : "Nueva Categoria")</li>
 </ol>
 
-@using (Html.BeginForm("guardar", "Home", FormMethod.Post, new { id = "frm-categoria" }))
+@using (Html.BeginForm("Guardar", "Categoria", FormMethod.Post, new { id = "frm-categoria" }))
 {
     @Html.HiddenFor(x => x.IDCATEGORIA)
 

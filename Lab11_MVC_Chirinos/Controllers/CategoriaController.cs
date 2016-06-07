@@ -38,7 +38,15 @@ namespace Lab11_MVC_Chirinos.Controllers
                 );
         }
 
-        public ActionResult guardar(CATEGORIA model)
+        public ActionResult Mantenimiento(string id = "")
+        {
+            return View(
+                id == "" || id == null ? new USUARIO() // Generar nuevo usuario
+                        : usuario.obtener(id) //Retorna un id de un usuario existente
+                );
+        }
+
+        public ActionResult Guardar(CATEGORIA model)
         {
             if (ModelState.IsValid)
             {
@@ -51,14 +59,14 @@ namespace Lab11_MVC_Chirinos.Controllers
             }
         }
 
-        public ActionResult eliminar(int id)
+        public ActionResult Eliminar(int id)
         {
             categoria.IDCATEGORIA = id;
             categoria.eliminar();
             return Redirect("~/Categoria"); // Devuelve el index
         }
 
-        public ActionResult buscar(string criterio)
+        public ActionResult Buscar(string criterio)
         {
             return View(
                     (criterio == null || criterio == "") ? categoria.listar()
