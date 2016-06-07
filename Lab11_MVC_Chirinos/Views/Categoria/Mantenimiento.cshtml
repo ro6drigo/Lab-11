@@ -1,0 +1,47 @@
+﻿@model Modelo.CATEGORIA
+@{
+    ViewBag.Title = (Model.IDCATEGORIA > 0 ? Model.NOMBRE : "Nueva Categoria");
+}
+
+<ol class="breadcrumb">
+    <li><a href="~/Home/TVCategoria">Categorias</a></li>
+    <li class="active">@(Model.IDCATEGORIA > 0 ? Model.NOMBRE : "Nueva Categoria")</li>
+</ol>
+
+@using (Html.BeginForm("guardar", "Home", FormMethod.Post, new { id = "frm-categoria" }))
+{
+    @Html.HiddenFor(x => x.IDCATEGORIA)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Información de Categoria</div>
+        <div class="panel-body">
+            <div class="form-group">
+                @Html.LabelFor(x => x.IDCATEGORIA)
+                @Html.TextBoxFor(x => x.IDCATEGORIA, new { @class = "form-control"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.NOMBRE)
+                @Html.TextAreaFor(x => x.NOMBRE, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.NOMBRE, null, new { @class = "label label-danger"})
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.DESCRIPCION)
+                @Html.TextAreaFor(x => x.DESCRIPCION, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.DESCRIPCION, null, new { @class = "label label-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.ESTADO)
+                <select name="estado" class="form-control">
+                    <option value="A" @(Model.ESTADO == "A" ? "selected" : "")>Activo</option>
+                    <option value="I" @(Model.ESTADO == "I" ? "selected" : "")>Inactivo</option>
+                </select>
+                @Html.ValidationMessageFor(x => x.ESTADO, null, new { @class = "label label-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="~/Home/TVCategoria" class="btn btn-danger">Cancelar</a>
+    </div>
+}

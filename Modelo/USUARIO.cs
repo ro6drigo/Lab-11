@@ -6,6 +6,7 @@ namespace Modelo
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
     using System.Linq;
+    using System.Data.Entity;
     [Table("USUARIO")]
     public partial class USUARIO
     {
@@ -79,6 +80,98 @@ namespace Modelo
             }
 
             return usuario;
+        }
+
+        public void mantenimiento()
+        {
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    if (this.IDUSUARIO != "" && this.IDUSUARIO != null)
+                    {
+                        db.Entry(this).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        db.Entry(this).State = EntityState.Added;
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public void eliminar()
+        {
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    db.Entry(this).State = System.Data.Entity.EntityState.Deleted;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public List<USUARIO> buscar(string criterio)
+        {
+            var usuarios = new List<USUARIO>();
+
+            string estado = "";
+            estado = (criterio == "Activo") ? "A" : ((criterio == "Inactivo") ? "I" : "");
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    usuarios = db.USUARIO
+                                .Where(x => x.NOMBRE.Contains(criterio) || x.ESTADO == estado)
+                                .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return usuarios;
+        }
+
+        public ResponseModel Acceder(string Email, string Password)
+        {
+            var rm = new ResponseModel();
+
+            try
+            {
+                using (var db = new db_ventas()) {
+                    Password = HashHelper.MD5(Password);
+                    var usuario = db.USUARIO.Where(x => x.EMAIL == Email)
+                                            .Where(x => x.PASSWORD == Password)
+                                            .SingleOrDefault();
+                    if (usuario != null)
+                    {
+                        SessionHelper.AddUserToSession(usuario.IDUSUARIO.ToString());
+                        rm.SetResponse(true);
+                    }
+                    else
+                    {
+                        rm.SetResponse(false, "Email o Password incorrecto...");
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            return rm;
         }
     }
 }

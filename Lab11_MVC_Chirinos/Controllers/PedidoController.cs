@@ -8,13 +8,19 @@ using Lab11_MVC_Chirinos.Filters;
 
 namespace Lab11_MVC_Chirinos.Controllers
 {
-    [Autenticado]
-    public class HomeController : Controller
+    public class PedidoController : Controller
     {
-        // GET: Home
+        private PEDIDO pedido = new PEDIDO();
+
+        // GET: Pedido
         public ActionResult Index()
         {
-            return View();
+            return View(pedido.listar());
+        }
+
+        public ActionResult Detalle(int id)
+        {
+            return View(pedido.obtener(id));
         }
     }
 }
