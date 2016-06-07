@@ -38,7 +38,7 @@ namespace Lab11_MVC_Chirinos.Controllers
                 );
         }
 
-        public ActionResult Mantenimiento(CATEGORIA model)
+        public ActionResult Guardar(CATEGORIA model)
         {
             if (ModelState.IsValid)
             {
