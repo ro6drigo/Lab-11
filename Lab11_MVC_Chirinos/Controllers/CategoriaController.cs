@@ -38,15 +38,7 @@ namespace Lab11_MVC_Chirinos.Controllers
                 );
         }
 
-        public ActionResult Mantenimiento(string id = "")
-        {
-            return View(
-                id == "" || id == null ? new USUARIO() // Generar nuevo usuario
-                        : usuario.obtener(id) //Retorna un id de un usuario existente
-                );
-        }
-
-        public ActionResult Guardar(CATEGORIA model)
+        public ActionResult Mantenimiento(CATEGORIA model)
         {
             if (ModelState.IsValid)
             {
