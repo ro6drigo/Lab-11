@@ -7,6 +7,10 @@ namespace Modelo
     using System.Data.Entity.Spatial;
     using System.Linq;
     using System.Data.Entity;
+    using System.Data.Entity.Validation;
+    using System.Web;
+    using System.IO;
+
     [Table("USUARIO")]
     public partial class USUARIO
     {
@@ -36,6 +40,9 @@ namespace Modelo
 
         [StringLength(1)]
         public string ESTADO { get; set; }
+
+        //[StringLength(250)]
+        //public string FOTO { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PEDIDO> PEDIDO { get; set; }
@@ -72,6 +79,25 @@ namespace Modelo
                     usuario = db.USUARIO.Include("PEDIDO")
                                 .Where(x => x.IDUSUARIO == id)
                                 .SingleOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+            return usuario;
+        }
+
+        public USUARIO obtenerLogin(string id)
+        {
+            var usuario = new USUARIO();
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    usuario = db.USUARIO.Where(x => x.IDUSUARIO == id).SingleOrDefault();
                 }
             }
             catch (Exception ex)
@@ -172,6 +198,48 @@ namespace Modelo
                 throw;
             }
             return rm;
+        }
+
+        public ResponseModel UploadFoto(HttpPostedFileBase foto)
+        {
+            var rm = new ResponseModel();
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    db.Configuration.ValidateOnSaveEnabled = false;
+
+                    var eUsuario = db.Entry(this);
+                    eUsuario.State = EntityState.Modified;
+
+                    if (foto != null)
+                    {
+                        string archivo = Path.GetExtension(foto.FileName);
+
+                        //ruta
+                        foto.SaveAs(HttpContext.Current.Server.MapPath("~/Uploads/" + archivo));
+
+                        //enviar al modelo nombre del archivo
+                        //this.FOTO = archivo;
+                    }
+                    else
+                    {
+                        eUsuario.Property(x => x.FOTO).IsModified = false;
+                    }
+
+                    if (this.NOMBRE == null) eUsuario.Property(x => x.NOMBRE).IsModified = false;
+                    if (this.PASSWORD == null) eUsuario.Property(x => x.PASSWORD).IsModified = false;
+
+                    db.SaveChanges();
+
+                    rm.SetResponse(true);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
