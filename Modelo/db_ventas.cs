@@ -43,10 +43,6 @@ namespace Modelo
                 .IsUnicode(false);
 
             modelBuilder.Entity<PEDIDO>()
-                .Property(e => e.IDUSUARIO)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<PEDIDO>()
                 .HasMany(e => e.DETALLE_PEDIDO)
                 .WithRequired(e => e.PEDIDO)
                 .WillCascadeOnDelete(false);
@@ -91,7 +87,7 @@ namespace Modelo
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<USUARIO>()
-                .Property(e => e.IDUSUARIO)
+                .Property(e => e.NOMBREUSU)
                 .IsUnicode(false);
 
             modelBuilder.Entity<USUARIO>()

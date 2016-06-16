@@ -4,6 +4,7 @@ namespace Modelo
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
     using System.Data.Entity.Spatial;
     using System.Linq;
     [Table("PRODUCTO")]
@@ -18,6 +19,7 @@ namespace Modelo
         [Key]
         public int IDPRODUCTO { get; set; }
 
+        [Required]
         public int IDCATEGORIA { get; set; }
 
         [Required]
@@ -27,8 +29,10 @@ namespace Modelo
         [StringLength(50)]
         public string DESCRIPCION { get; set; }
 
+        [Required]
         public int PRECIO { get; set; }
 
+        [Required]
         public int STOCK { get; set; }
 
         [Required]
@@ -40,6 +44,7 @@ namespace Modelo
         [StringLength(50)]
         public string IMAGEN { get; set; }
 
+        [Required]
         [StringLength(1)]
         public string ESTADO { get; set; }
 
@@ -85,6 +90,67 @@ namespace Modelo
                 throw;
             }
 
+            return producto;
+        }
+
+        public void mantenimiento()
+        {
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    if (this.IDPRODUCTO > 0)
+                    {
+                        db.Entry(this).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        db.Entry(this).State = EntityState.Added;
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public void eliminar()
+        {
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    db.Entry(this).State = EntityState.Deleted;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public List<PRODUCTO> buscar(string criterio) //Buscar por nombre y estado
+        {
+            var producto = new List<PRODUCTO>();
+            string estado = "";
+            estado = (criterio == "Activo") ? "A" : ((criterio == "Inactivo") ? "I" : "");
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    producto = db.PRODUCTO
+                                .Where(x => x.NOMBRE.Contains(criterio) || x.ESTADO == estado)
+                                .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             return producto;
         }
     }

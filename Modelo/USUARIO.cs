@@ -7,6 +7,9 @@ namespace Modelo
     using System.Data.Entity.Spatial;
     using System.Linq;
     using System.Data.Entity;
+    using System.Web;
+    using System.IO;
+    using System.Data.Entity.Validation;
     [Table("USUARIO")]
     public partial class USUARIO
     {
@@ -17,23 +20,35 @@ namespace Modelo
         }
 
         [Key]
-        [StringLength(20)]
-        public string IDUSUARIO { get; set; }
+        public int IDUSUARIO { get; set; }
 
+        [Required]
         public int IDTIPOUSUARIO { get; set; }
 
+        [Required]
+        [StringLength(30)]
+        public string NOMBREUSU { get; set; }
+
+        [Required]
         [StringLength(20)]
         public string PASSWORD { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string NOMBRE { get; set; }
 
+        [Required]
         [StringLength(20)]
         public string APELLIDOS { get; set; }
 
+        [Required]
         [StringLength(50)]
         public string EMAIL { get; set; }
 
+        [StringLength(250)]
+        public string FOTO { get; set; }
+
+        [Required]
         [StringLength(1)]
         public string ESTADO { get; set; }
 
@@ -61,7 +76,7 @@ namespace Modelo
             return usuario;
         }
 
-        public USUARIO obtener(string id)
+        public USUARIO obtener(int id)
         {
             var usuario = new USUARIO();
 
@@ -82,13 +97,31 @@ namespace Modelo
             return usuario;
         }
 
+        public USUARIO obtenerLogin(int id)
+        {
+            var usuario = new USUARIO();
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    usuario = db.USUARIO.Where(x => x.IDUSUARIO == id).SingleOrDefault();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return usuario;
+        }
+
         public void mantenimiento()
         {
             try
             {
                 using (var db = new db_ventas())
                 {
-                    if (this.IDUSUARIO != "" && this.IDUSUARIO != null)
+                    if (this.IDUSUARIO != 0)
                     {
                         db.Entry(this).State = EntityState.Modified;
                     }
@@ -168,6 +201,53 @@ namespace Modelo
                 }
             }
             catch(Exception ex)
+            {
+                throw;
+            }
+            return rm;
+        }
+
+        public ResponseModel guardarFoto(HttpPostedFileBase Foto)
+        {
+            var rm = new ResponseModel();
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    db.Configuration.ValidateOnSaveEnabled = false;
+
+                    var eUsuario = db.Entry(this);
+                    eUsuario.State = EntityState.Modified;
+                    //Obviar campos o ignorar en la actualización
+                    if (Foto != null)
+                    {
+                        //String archivo = Path.GetFileName(Foto.FileName);//Path.GetExtension(Foto.FileName);
+
+                        //Nombre de imagen en forma aleatoria
+                        String archivo = DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(Foto.FileName);
+
+                        //Colocar la ruta donde se grabará
+                        Foto.SaveAs(HttpContext.Current.Server.MapPath("~/Uploads/" + archivo));
+
+                        //enviar al modelo el nombre del archivo
+                        this.FOTO = archivo;
+                    }
+                    else eUsuario.Property(x => x.FOTO).IsModified = false; // el campo no es obligatorio
+
+                    if (this.NOMBREUSU == null) eUsuario.Property(x => x.NOMBREUSU).IsModified = false;
+
+                    if (this.PASSWORD == null) eUsuario.Property(x => x.PASSWORD).IsModified = false;
+
+                    db.SaveChanges();
+                    rm.SetResponse(true);
+                }
+            }
+            catch (DbEntityValidationException e)
+            {
+                throw;
+            }
+            catch (Exception)
             {
                 throw;
             }

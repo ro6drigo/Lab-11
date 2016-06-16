@@ -13,21 +13,28 @@ namespace Lab11_MVC_Chirinos.Controllers
         private USUARIO usuario = new USUARIO();
 
         // GET: Usuario
-        public ActionResult Index()
+        public ActionResult Index(string criterio)
         {
-            return View(usuario.listar());
+            if (criterio == null || criterio == "")
+            {
+                return View(usuario.listar());
+            }
+            else
+            {
+                return View(usuario.buscar(criterio));
+            }
         }
 
-        public ActionResult Detalle(string id)
+        public ActionResult Detalle(int id)
         {
             return View(usuario.obtener(id));
         }
 
-        public ActionResult Mantenimiento(string id = "")
+        public ActionResult Mantenimiento(int id = 0)
         {
             return View(
-                id == "" && id == null ? new USUARIO() // Generar nuevo usuario
-                                        : usuario.obtener(id) //Retorna un id de un usuario existente
+                id == 0 ? new USUARIO() // Generar nuevo usuario
+                        : usuario.obtener(id) //Retorna un id de un usuario existente
                 );
         }
 
@@ -44,7 +51,7 @@ namespace Lab11_MVC_Chirinos.Controllers
             }
         }
 
-        public ActionResult Eliminar(string id)
+        public ActionResult Eliminar(int id)
         {
             usuario.IDUSUARIO = id;
             usuario.eliminar();
