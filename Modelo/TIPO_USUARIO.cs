@@ -48,6 +48,24 @@ namespace Modelo
             return tipo_usuario;
         }
 
+        public List<TIPO_USUARIO> ListarTipUsuario()
+        {
+            var tipo = new List<TIPO_USUARIO>();
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    tipo = db.TIPO_USUARIO.OrderBy(x => x.IDTIPOUSUARIO).ToList();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }
+            return tipo;
+        }
+
         public TIPO_USUARIO obtener(int id)
         {
             var tipo_usuario = new TIPO_USUARIO();
