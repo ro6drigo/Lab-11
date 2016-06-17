@@ -3,6 +3,121 @@
     ViewBag.Title = "Listar Tipos de Usuario";
 }
 
+<div class="row">
+    <div class="col-sm-8">
+        @using (Html.BeginForm("Index", "TipoUsuario", FormMethod.Post, new { criterio = "frm-buscar", @class = "form-inline" }))
+        {
+            <div class="form-group">
+                @Html.TextBox("criterio", null, new { @class = "form-control", placeholder = "Buscar" })
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        }
+    </div>
+
+    <div class="col-sm-4">
+        <div class="text-right">
+            <a href="~/TipoUsuario/Mantenimiento/" class="btn btn-primary">Agregar Tipo de Usuario</a>
+        </div>
+    </div>
+</div>
+
+<div id="lista"></div>
+
+<script>
+    $(document).ready(function () {
+        $("#lista").anexGrid({
+            columnas: [
+                { leyenda: "IDTIPOUSUARIO", columna: "IDTIPOUSUARIO", ordenable: true },
+                { leyenda: "NOMBRE", columna: "NOMBRE", ordenable: true },
+                { leyenda: "ESTADO", columna: "ESTADO", ordenable: true },
+                { style: "Width: 80px;" },
+                { style: "Width: 80px;" },
+                { style: "Width: 80px;" }
+            ],
+
+            modelo: [
+                //Campo 1: IDTIPOUSUARIO
+                { propiedad: "IDTIPOUSUARIO" },
+                //Campo 2: NOMBRE
+                {
+                    propiedad: "NOMBRE", formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/TipoUsuario/Mantenimiento")' + obj.IDTIPOUSUARIO,
+                            contenido: valor
+                        });
+                    }
+                },
+                //Campo 3
+                {
+                    propiedad: "ESTADO", formato: function (tr, obj, valor) {
+                        return valor == "A" ? "Activo" : "Inactivo"
+                    }
+                },
+
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/TipoUsuario/Detalle")' + obj.IDTIPOUSUARIO,
+                            contenido: "Visualizar",
+                            class: 'btn btn-warning btn-xs'
+                        });
+                    }
+                },
+
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/TipoUsuario/Mantenimiento")' + obj.IDTIPOUSUARIO,
+                            contenido: "Modificar",
+                            class: 'btn btn-warning btn-xs'
+                        });
+                    }
+                },
+
+                {
+                    formato: function (tr, obj, valor) {
+                        return anexGrid_link({
+                            href: '@Url.Content("~/TipoUsuario/Eliminar")' + obj.IDTIPOUSUARIO,
+                            contenido: "Eliminar",
+                            class: 'btn btn-warning btn-xs',
+                            attr: [
+                                'onclick="return confirm(\'¿Está seguro de eliminar el registro?\')'
+                            ]
+                        });
+                    }
+                }
+            ],
+
+            url: '@Url.Content("~/TipoUsuario/CargarTipoUsuario")',
+            paginable: true,
+            limite: [10, 20, 50, 100],
+            columna: 'IDTIPOUSUARIO',
+            columna_orden: "DESC"
+        });
+    })
+</script>
+
+
+@*<div class="row">
+    <div class="col-sm-8">
+        @using (Html.BeginForm("Index", "TipoUsuario", FormMethod.Post, new { criterio = "frm-buscar", @class = "form-inline" }))
+        {
+            <div class="form-group">
+                @Html.TextBox("criterio", null, new { @class = "form-control", placeholder = "Buscar" })
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        }
+    </div>
+
+    <div class="col-sm-4">
+        <div class="text-right">
+            <a href="~/TipoUsuario/Mantenimiento/" class="btn btn-primary">Agregar Tipo de Usuario</a>
+        </div>
+    </div>
+</div>
+
+<br />
+
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -20,9 +135,13 @@
                     <td>@(m.IDTIPOUSUARIO)</td>
                     <td>@(m.NOMBRE)</td>
                     <td>@(m.ESTADO == "A" ? "Activo" : "Inactivo")</td>
-                    <td><a href="~/Home/TDTipoUsuario/@m.IDTIPOUSUARIO" class="btn btn-warning">Detalle</a></td>
+                    <td>
+                        <a href="~/TipoUsuario/Detalle/@m.IDTIPOUSUARIO" class="btn btn-warning btn-xs">Detalle</a>
+                        <a href="~/TipoUsuario/Mantenimiento/@m.IDTIPOUSUARIO" class="btn btn-primary btn-xs">Editar</a>
+                        <a href="~/TipoUsuario/Eliminar/@m.IDTIPOUSUARIO" class="btn btn-danger btn-xs" onclick="return confirm('¿Esta seguro de eliminar el registro?')">Eliminar</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-</div>
+</div>*@

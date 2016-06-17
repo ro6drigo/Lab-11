@@ -1,7 +1,7 @@
 ﻿
 @{
     string controlador = ViewContext.RouteData.Values["controller"].ToString().ToLower();
-    Modelo.USUARIO usuario = new Modelo.USUARIO().obtenerLogin(Modelo.SessionHelper.GetUser().ToString());
+    Modelo.USUARIO usuario = new Modelo.USUARIO().obtenerLogin(Modelo.SessionHelper.GetUser());
 }
 
 <!DOCTYPE html>
@@ -15,7 +15,7 @@
 </head>
 <body>
 
-    @if (controlador != "Login")
+    @if (Modelo.SessionHelper.ExistUserInSession())
     {
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="~/Home/Index" class="navbar-brand">Lab 11 Rodrigo</a>
+                    <a href="~/Home/Index" class="navbar-brand">MVC Chirinos</a>
                 </div>
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
@@ -41,7 +41,7 @@
                         <li><a href="~/TipoUsuario/">Tipo Usuario</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <img src="~/Uploads/chica.jpg" alt="Foto de Perfil" height="40"/> <span class="caret"></span>
+                                <img src="~/Uploads/@usuario.FOTO" alt="Foto de Perfil" height="20"/> @usuario.NOMBRE, @usuario.APELLIDOS <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li>@Html.ActionLink("Perfil", "", "")</li>
@@ -71,7 +71,10 @@
 
     <script src="~/assets/js/jquery-1.12.3.min.js"></script>
     <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/jquery.form.js"></script>
+    <script src="~/assets/js/ini.js"></script>
     <script src="~/assets/js/jquery.validate.min.js"></script>
     <script src="~/assets/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/assets/js/jquery.anexgrid.min.js"></script>
 </body>
 </html>

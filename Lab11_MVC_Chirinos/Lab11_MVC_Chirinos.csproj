@@ -120,6 +120,7 @@
     <Content Include="assets\js\bootstrap.min.js" />
     <Content Include="assets\js\ini.js" />
     <Content Include="assets\js\jquery-1.12.3.min.js" />
+    <Content Include="assets\js\jquery.anexgrid.min.js" />
     <Content Include="assets\js\jquery.form.js" />
     <Content Include="assets\js\jquery.js" />
     <Content Include="Global.asax" />
@@ -175,6 +176,8 @@
     <Content Include="Views\Categoria\buscar.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Usuario\Mantenimiento.cshtml" />
+    <Content Include="Views\Perfil\Index.cshtml" />
+    <Content Include="Views\TipoUsuario\Mantenimiento.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -188,7 +191,6 @@
     <Folder Include="fonts\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\" />
-    <Folder Include="Views\Perfil\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Modelo\Modelo.csproj">
