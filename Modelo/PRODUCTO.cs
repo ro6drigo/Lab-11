@@ -61,7 +61,9 @@ namespace Modelo
             {
                 using (var db = new db_ventas())
                 {
-                    producto = db.PRODUCTO.ToList();
+                    producto = db.PRODUCTO
+                                        .Include("CATEGORIA")
+                                        .ToList();
                 }
             }
             catch (Exception ex)
@@ -165,6 +167,7 @@ namespace Modelo
                     if(criterio > 0)
                     {
                         producto = db.PRODUCTO
+                                .Include("CATEGORIA")
                                 .Where(x => x.IDCATEGORIA == criterio)
                                 .ToList();
                     }
