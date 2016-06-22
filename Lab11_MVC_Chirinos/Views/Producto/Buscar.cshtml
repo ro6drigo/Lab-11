@@ -1,0 +1,61 @@
+﻿@model List<Modelo.PRODUCTO>
+@{
+    ViewBag.Title = "Listar Productos";
+    List<Modelo.CATEGORIA> categoria = ViewBag.CboxCategoria;
+}
+
+
+<div class="row">
+    <div class="col-sm-8">
+        @using (Html.BeginForm("Buscar", "Producto", FormMethod.Post, new { criterio = "frm-buscar", @class = "form-inline" }))
+        {
+            <div class="form-group">
+                <select name="criterio" class="form-control">
+                    @foreach (var c in categoria)
+                    {
+                        <option value="@c.IDCATEGORIA">@c.NOMBRE</option>
+                    }
+                </select>
+            </div>
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+        }
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id Categoria</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Portada</th>
+                <th>Importancia</th>
+                <th>Imagen</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var m in Model)
+            {
+                <tr>
+                    <td>@(m.IDPRODUCTO)</td>
+                    <td>@(m.IDCATEGORIA)</td>
+                    <td>@(m.NOMBRE)</td>
+                    <td>@(m.DESCRIPCION)</td>
+                    <td>@(m.PRECIO)</td>
+                    <td>@(m.STOCK)</td>
+                    <td>@(m.PORTADA)</td>
+                    <td>@(m.IMPORTANCIA)</td>
+                    <td>@(m.IMAGEN)</td>
+                    <td>@(m.ESTADO == "A" ? "Activo" : "Inactivo")</td>
+                    <td><a href="~/Home/TDProducto/@m.IDPRODUCTO" class="btn btn-warning">Detalle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

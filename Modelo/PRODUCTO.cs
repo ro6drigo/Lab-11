@@ -153,5 +153,32 @@ namespace Modelo
             }
             return producto;
         }
+
+        public List<PRODUCTO> buscarXCategoria(int criterio)
+        {
+            var producto = new List<PRODUCTO>();
+
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    if(criterio > 0)
+                    {
+                        producto = db.PRODUCTO
+                                .Where(x => x.IDCATEGORIA == criterio)
+                                .ToList();
+                    }
+                    else
+                    {
+                        producto = listar();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return producto;
+        }
     }
 }
