@@ -145,5 +145,53 @@ namespace Modelo
 
             return categorias;
         }
+
+        public List<CATEGORIA> consultar()
+        {
+            List<CATEGORIA> cat3 = new List<CATEGORIA>();
+            try
+            {
+                using (var db = new db_ventas())
+                {
+                    //var cat1 = db.CATEGORIA
+                    //            .GroupJoin(db.PRODUCTO,
+                    //                p => p.IDCATEGORIA,
+                    //                c => c.IDCATEGORIA,
+                    //                (pro, cat) => new {
+                    //                    IDCATEGORIA,
+                    //                    cate = cat.NOMBRE,
+                    //                    total = pro.PRODUCTO.Count()
+                    //                });
+
+                    var cat2 = from c in db.CATEGORIA
+                               join p in db.PRODUCTO
+                               on c.IDCATEGORIA equals p.IDCATEGORIA into g
+                               select new
+                               {
+                                   IDCATEGORIA = c.IDCATEGORIA,
+                                   NOMBRE = c.NOMBRE,
+                                   total = g.Count()
+                               };
+
+                    cat3 = db.CATEGORIA
+                                .Include(x => x.PRODUCTO)
+                                .GroupBy(g => new { g.IDCATEGORIA, g.NOMBRE })
+                                .Select(g => new CATEGORIA
+                                {
+                                    IDCATEGORIA = g.Key.IDCATEGORIA,
+                                    NOMBRE = g.Key.NOMBRE
+                                })
+                                .ToList();
+
+                }
+
+                return cat3;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+        }
     }
 }
