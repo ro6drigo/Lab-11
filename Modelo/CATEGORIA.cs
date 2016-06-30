@@ -146,9 +146,10 @@ namespace Modelo
             return categorias;
         }
 
-        public List<CATEGORIA> consultar()
+        public string[,] consultar()
         {
-            List<CATEGORIA> cat3 = new List<CATEGORIA>();
+            string[,] categoria;
+
             try
             {
                 using (var db = new db_ventas())
@@ -163,29 +164,41 @@ namespace Modelo
                     //                    total = pro.PRODUCTO.Count()
                     //                });
 
-                    var cat2 = from c in db.CATEGORIA
-                               join p in db.PRODUCTO
-                               on c.IDCATEGORIA equals p.IDCATEGORIA into g
-                               select new
-                               {
-                                   IDCATEGORIA = c.IDCATEGORIA,
-                                   NOMBRE = c.NOMBRE,
-                                   total = g.Count()
-                               };
-
-                    cat3 = db.CATEGORIA
-                                .Include(x => x.PRODUCTO)
-                                .GroupBy(g => new { g.IDCATEGORIA, g.NOMBRE })
-                                .Select(g => new CATEGORIA
+                    var cat = (from c in db.CATEGORIA
+                                join p in db.PRODUCTO
+                                on c.IDCATEGORIA equals p.IDCATEGORIA into g
+                                select new
                                 {
-                                    IDCATEGORIA = g.Key.IDCATEGORIA,
-                                    NOMBRE = g.Key.NOMBRE
-                                })
-                                .ToList();
+                                    IDCATEGORIA = c.IDCATEGORIA,
+                                    NOMBRE = c.NOMBRE,
+                                    total = g.Count()
+                                }).ToList();
+
+                    categoria = new string[cat.Count(), 3];
+
+                    int count = 0;
+                    foreach (var c in cat)
+                    {
+                        categoria[count, 0] = Convert.ToString(c.IDCATEGORIA);
+                        categoria[count, 1] = Convert.ToString(c.NOMBRE);
+                        categoria[count, 2] = Convert.ToString(c.total);
+
+                        count++;
+                    }
+
+                    //cat3 = db.CATEGORIA
+                    //            .Include(x => x.PRODUCTO)
+                    //            .GroupBy(g => new { g.IDCATEGORIA, g.NOMBRE })
+                    //            .Select(g => new CATEGORIA
+                    //            {
+                    //                IDCATEGORIA = g.Key.IDCATEGORIA,
+                    //                NOMBRE = g.Key.NOMBRE
+                    //            })
+                    //            .ToList();
 
                 }
 
-                return cat3;
+                return categoria;
             }
             catch (Exception ex)
             {

@@ -181,6 +181,7 @@
     <Content Include="Views\Perfil\Index.cshtml" />
     <Content Include="Views\TipoUsuario\Mantenimiento.cshtml" />
     <Content Include="Views\Producto\Buscar.cshtml" />
+    <Content Include="Views\Categoria\Consulta.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

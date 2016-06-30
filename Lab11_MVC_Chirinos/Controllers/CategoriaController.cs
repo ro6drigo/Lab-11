@@ -25,6 +25,11 @@ namespace Lab11_MVC_Chirinos.Controllers
             }
         }
 
+        public ActionResult Consulta()
+        {
+            return View(categoria.consultar());
+        }
+
         public ActionResult Detalle(int id)
         {
             return View(categoria.obtener(id));
